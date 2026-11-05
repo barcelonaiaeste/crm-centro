@@ -1,0 +1,19 @@
+node_modules
+dist
+.DS_Store
+
+# Variables de entorno: solo se sube .env.example
+.env
+.env.*
+!.env.example
+
+# Nunca subir claves, backups ni volcados de la base de datos
+KEYS*
+*.backup
+*.backup.gz
+*.dump
+*.sql.gz
+.vercel
+
+# Datos reales (nombres y puntos): el repo es público
+supabase/importacion/

@@ -1,0 +1,776 @@
+{
+  "configuracion": {
+    "puntos": {
+      "categoriaGt": "H",
+      "minimoGt": 30,
+      "rubrica": {
+        "categorias": [
+          {
+            "id": "INI",
+            "label": "Inicio de campaña",
+            "grupo": "Campaña",
+            "sinCodigo": true
+          },
+          {
+            "id": "A",
+            "label": "Junta directiva y coordinación",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "B",
+            "label": "Actualización de documentación",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "C",
+            "label": "Asistencia a reuniones",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "D",
+            "label": "Documentación oficial",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "E",
+            "label": "Trabajo de despacho",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "F",
+            "label": "Captación de socios",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "G",
+            "label": "Trabajo extra",
+            "grupo": "Comité Local"
+          },
+          {
+            "id": "H",
+            "label": "GT Empresas",
+            "grupo": "Grupos de trabajo"
+          },
+          {
+            "id": "I",
+            "label": "GT Marketing",
+            "grupo": "Grupos de trabajo"
+          },
+          {
+            "id": "J",
+            "label": "GT Eventos / Incoming",
+            "grupo": "Grupos de trabajo"
+          },
+          {
+            "id": "K",
+            "label": "GT Outgoing",
+            "grupo": "Grupos de trabajo"
+          },
+          {
+            "id": "L",
+            "label": "GT IT",
+            "grupo": "Grupos de trabajo"
+          },
+          {
+            "id": "M",
+            "label": "Presencia",
+            "grupo": "Presencia"
+          }
+        ],
+        "conceptos": [
+          {
+            "id": "antiguedad",
+            "cat": "INI",
+            "texto": "Antigüedad (campañas completadas)",
+            "min": 5,
+            "max": 5,
+            "unidad": "campaña"
+          },
+          {
+            "id": "arrastre",
+            "cat": "INI",
+            "texto": "Arrastre de la campaña anterior",
+            "nota": "La mitad de los puntos de la campaña anterior (nada si eran menos de 10 o si disfrutó una práctica)."
+          },
+          {
+            "id": "a_presidencia",
+            "cat": "A",
+            "texto": "Presidencia",
+            "min": 10,
+            "max": 10,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año)."
+          },
+          {
+            "id": "a_vice_sec_tes",
+            "cat": "A",
+            "texto": "Vicepresidencia, Secretaría y Tesorería",
+            "min": 7.5,
+            "max": 7.5,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año)."
+          },
+          {
+            "id": "a_vocalia",
+            "cat": "A",
+            "texto": "Vocalía",
+            "min": 5,
+            "max": 5,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año)."
+          },
+          {
+            "id": "a_and_presidencia",
+            "cat": "A",
+            "texto": "IAESTE Andalucía: Presidencia",
+            "min": 12.5,
+            "max": 12.5,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año)."
+          },
+          {
+            "id": "a_and_secretaria",
+            "cat": "A",
+            "texto": "IAESTE Andalucía: Secretaría",
+            "min": 10,
+            "max": 10,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año)."
+          },
+          {
+            "id": "a_and_vocalia",
+            "cat": "A",
+            "texto": "IAESTE Andalucía: Vocalía de Málaga",
+            "min": 7.5,
+            "max": 7.5,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año)."
+          },
+          {
+            "id": "a_coord_gt",
+            "cat": "A",
+            "texto": "Coordinador de GT",
+            "min": 10,
+            "max": 10,
+            "unidad": "tramo",
+            "nota": "Se anota una vez por tramo: ene-ago y sep-dic (dos apuntes al año). Si hay co-coordinadores, los puntos se reparten entre ellos."
+          },
+          {
+            "id": "b_cambio_junta",
+            "cat": "B",
+            "texto": "Cambios de Junta Directiva",
+            "min": 5,
+            "max": 5,
+            "unidad": "persona",
+            "nota": "Hasta 2 personas; si son más, los puntos se reparten entre todas."
+          },
+          {
+            "id": "b_certificado",
+            "cat": "B",
+            "texto": "Certificado electrónico",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "id": "b_cuenta",
+            "cat": "B",
+            "texto": "Cambio de titulares de la cuenta bancaria",
+            "min": 10,
+            "max": 10,
+            "unidad": "persona",
+            "nota": "Hasta 2 personas; si son más, los puntos se reparten entre todas."
+          },
+          {
+            "id": "c_centro",
+            "cat": "C",
+            "texto": "Reunión de centro",
+            "min": 1,
+            "max": 1,
+            "unidad": "reunión"
+          },
+          {
+            "id": "c_comite",
+            "cat": "C",
+            "texto": "Reunión de comité local",
+            "min": 2,
+            "max": 2,
+            "unidad": "reunión"
+          },
+          {
+            "id": "c_delegacion",
+            "cat": "C",
+            "texto": "Reunión de la delegación de Andalucía / IAESTE España",
+            "min": 3,
+            "max": 3,
+            "unidad": "reunión"
+          },
+          {
+            "id": "d_actas",
+            "cat": "D",
+            "texto": "Actas de reuniones",
+            "min": 2,
+            "max": 2,
+            "unidad": "documento"
+          },
+          {
+            "id": "d_movilidad",
+            "cat": "D",
+            "texto": "Informe de movilidad",
+            "min": 1,
+            "max": 1,
+            "unidad": "documento"
+          },
+          {
+            "id": "d_subvenciones",
+            "cat": "D",
+            "texto": "Subvenciones",
+            "min": 7.5,
+            "max": 7.5,
+            "unidad": "persona",
+            "nota": "Hasta 2 personas; si son más, los puntos se reparten entre todas."
+          },
+          {
+            "id": "d_liquidaciones",
+            "cat": "D",
+            "texto": "Liquidaciones",
+            "min": 1,
+            "max": 1,
+            "unidad": "documento"
+          },
+          {
+            "id": "e_horas",
+            "cat": "E",
+            "texto": "Horas de despacho",
+            "min": 1,
+            "max": 1,
+            "unidad": "hora",
+            "nota": "Máximo 20 horas."
+          },
+          {
+            "id": "e_correo_drive",
+            "cat": "E",
+            "texto": "Gestión del correo y el Drive",
+            "min": 1,
+            "max": 5
+          },
+          {
+            "id": "f_charla",
+            "cat": "F",
+            "texto": "Charla informativa",
+            "min": 2.5,
+            "max": 2.5,
+            "unidad": "charla",
+            "nota": "A partir de la quinta charla, 1 punto."
+          },
+          {
+            "id": "f_stand_org",
+            "cat": "F",
+            "texto": "Stand o evento presencial: organización",
+            "min": 2,
+            "max": 2
+          },
+          {
+            "id": "f_stand_hora",
+            "cat": "F",
+            "texto": "Stand o evento presencial: horas",
+            "min": 2,
+            "max": 2,
+            "unidad": "hora"
+          },
+          {
+            "id": "g_extra",
+            "cat": "G",
+            "texto": "Tarea extra (según su importancia y el trabajo requerido)",
+            "min": 1,
+            "max": 10,
+            "unidad": "tarea"
+          },
+          {
+            "id": "h_jornada_llamadas",
+            "cat": "H",
+            "texto": "Asistir a una jornada de llamadas",
+            "min": 0.5,
+            "max": 0.5
+          },
+          {
+            "id": "h_visita",
+            "cat": "H",
+            "texto": "Día de visitar empresas presencialmente",
+            "min": 20,
+            "max": 20
+          },
+          {
+            "id": "h_reunion_conseguir",
+            "cat": "H",
+            "texto": "Conseguir una reunión con una empresa",
+            "min": 5,
+            "max": 5
+          },
+          {
+            "id": "h_reunion_online",
+            "cat": "H",
+            "texto": "Reunirse con una empresa online",
+            "min": 10,
+            "max": 10
+          },
+          {
+            "id": "h_reunion_presencial",
+            "cat": "H",
+            "texto": "Reunirse con una empresa presencialmente",
+            "min": 15,
+            "max": 15
+          },
+          {
+            "id": "h_renovar",
+            "cat": "H",
+            "texto": "Renovar Excel, formulario, plantillas…",
+            "min": 1,
+            "max": 10
+          },
+          {
+            "id": "h_coordinador",
+            "cat": "H",
+            "texto": "Ocupar el puesto de coordinador/a",
+            "min": 15,
+            "max": 15
+          },
+          {
+            "id": "h_reemplazo",
+            "cat": "H",
+            "texto": "Reemplazar al coordinador en una reunión",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "id": "h_patrocinador",
+            "cat": "H",
+            "texto": "Conseguir patrocinador",
+            "min": 20,
+            "max": 20
+          },
+          {
+            "id": "h_practica_renovacion",
+            "cat": "H",
+            "texto": "Conseguir práctica de empresa de renovación",
+            "min": 25,
+            "max": 25,
+            "practica": true
+          },
+          {
+            "id": "h_practica_nueva",
+            "cat": "H",
+            "texto": "Conseguir práctica de empresa nueva",
+            "min": 50,
+            "max": 50,
+            "practica": true
+          },
+          {
+            "id": "h_incoming",
+            "cat": "H",
+            "texto": "Seguimiento del estudiante en prácticas en Málaga",
+            "min": 5,
+            "max": 5
+          },
+          {
+            "id": "i_instagram",
+            "cat": "I",
+            "texto": "Redes sociales: Instagram",
+            "min": 20,
+            "max": 20,
+            "nota": "Mínimo 3 publicaciones (en Instagram, más)."
+          },
+          {
+            "id": "i_tiktok",
+            "cat": "I",
+            "texto": "Redes sociales: TikTok",
+            "min": 15,
+            "max": 15,
+            "nota": "Mínimo 3 publicaciones."
+          },
+          {
+            "id": "i_linkedin",
+            "cat": "I",
+            "texto": "Redes sociales: LinkedIn",
+            "min": 15,
+            "max": 15,
+            "nota": "Mínimo 3 publicaciones."
+          },
+          {
+            "id": "i_facebook",
+            "cat": "I",
+            "texto": "Redes sociales: Facebook",
+            "min": 15,
+            "max": 15,
+            "nota": "Mínimo 3 publicaciones."
+          },
+          {
+            "id": "i_x",
+            "cat": "I",
+            "texto": "Redes sociales: X",
+            "min": 15,
+            "max": 15,
+            "nota": "Mínimo 3 publicaciones."
+          },
+          {
+            "id": "i_cartel",
+            "cat": "I",
+            "texto": "Cartel",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "i_video",
+            "cat": "I",
+            "texto": "Vídeo",
+            "min": 4,
+            "max": 6
+          },
+          {
+            "id": "i_plantilla",
+            "cat": "I",
+            "texto": "Plantilla",
+            "min": 2,
+            "max": 2
+          },
+          {
+            "id": "i_publicacion",
+            "cat": "I",
+            "texto": "Publicación",
+            "min": 4,
+            "max": 6
+          },
+          {
+            "id": "i_idea",
+            "cat": "I",
+            "texto": "Idea",
+            "min": 1,
+            "max": 1
+          },
+          {
+            "id": "i_diseno",
+            "cat": "I",
+            "texto": "Diseño de folletos, merchandising…",
+            "min": 5,
+            "max": 10
+          },
+          {
+            "id": "i_medios",
+            "cat": "I",
+            "texto": "Medios de comunicación: reportajes, entrevistas…",
+            "min": 8,
+            "max": 8
+          },
+          {
+            "id": "i_fotos",
+            "cat": "I",
+            "texto": "Tomar y enviar fotos",
+            "min": 1,
+            "max": 2
+          },
+          {
+            "id": "j_merienda_comprar",
+            "cat": "J",
+            "texto": "Merienda: comprar alimentación y bebida",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "j_merienda_decorar",
+            "cat": "J",
+            "texto": "Merienda: decoración del espacio",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "id": "j_merienda_preparar",
+            "cat": "J",
+            "texto": "Merienda: preparar actividades",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "j_merienda_otros",
+            "cat": "J",
+            "texto": "Merienda: otros (organizar amigo invisible, reservar espacio…)",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "id": "j_taller_presentar",
+            "cat": "J",
+            "texto": "Taller: preparar y presentar",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "j_taller_material",
+            "cat": "J",
+            "texto": "Taller: comprar material",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "j_taller_asistir",
+            "cat": "J",
+            "texto": "Taller: asistir",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "j_voley_entreno",
+            "cat": "J",
+            "texto": "Voleibol: asistir al entreno",
+            "min": 0.2,
+            "max": 0.2
+          },
+          {
+            "id": "j_voley_capitan",
+            "cat": "J",
+            "texto": "Voleibol: capitán",
+            "min": 2,
+            "max": 2
+          },
+          {
+            "id": "j_feria_comprar",
+            "cat": "J",
+            "texto": "Feria de Empresas: comprar alimentación y bebida",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "j_feria_decorar",
+            "cat": "J",
+            "texto": "Feria de Empresas: decorar el sitio",
+            "min": 3,
+            "max": 3
+          },
+          {
+            "id": "j_mercadillo",
+            "cat": "J",
+            "texto": "Mercadillo de libros",
+            "min": 2.5,
+            "max": 5,
+            "unidad": "hora"
+          },
+          {
+            "id": "j_reuniones_oficiales",
+            "cat": "J",
+            "texto": "Reuniones oficiales (AGO, AGA…)",
+            "min": 5,
+            "max": 10
+          },
+          {
+            "id": "j_internacionales",
+            "cat": "J",
+            "texto": "Eventos internacionales (Twinning, Jump, Weekend…)",
+            "min": 5,
+            "max": 10
+          },
+          {
+            "id": "j_recoger",
+            "cat": "J",
+            "texto": "Incoming: recoger al estudiante",
+            "min": 10,
+            "max": 10
+          },
+          {
+            "id": "j_alojamiento",
+            "cat": "J",
+            "texto": "Incoming: buscar alojamiento",
+            "min": 15,
+            "max": 20
+          },
+          {
+            "id": "j_actividad_trainee",
+            "cat": "J",
+            "texto": "Incoming: organizar actividades con el trainee",
+            "min": 1,
+            "max": 3
+          },
+          {
+            "id": "k_resp_interes",
+            "cat": "K",
+            "texto": "Responder: interés de un estudiante o consulta de IAESTE España",
+            "min": 1,
+            "max": 2,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_resp_info",
+            "cat": "K",
+            "texto": "Responder: solicitud de información sobre la asociación o prácticas",
+            "min": 1,
+            "max": 2,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_resp_dudas",
+            "cat": "K",
+            "texto": "Responder: dudas sobre documentación para solicitar o nominar",
+            "min": 1,
+            "max": 3,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_env_perfil",
+            "cat": "K",
+            "texto": "Enviar: pedir a IAESTE Andalucía que apruebe el perfil en la Exchange Platform",
+            "min": 1,
+            "max": 1,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_env_preguntar",
+            "cat": "K",
+            "texto": "Enviar: preguntar a IAESTE España, informar sobre becas o supervisar una nominación",
+            "min": 2,
+            "max": 2,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_env_info",
+            "cat": "K",
+            "texto": "Enviar: información, plantillas y guía de nominación a un solicitante",
+            "min": 3,
+            "max": 3,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_env_subastas",
+            "cat": "K",
+            "texto": "Enviar: reenviar correos sobre subastas",
+            "min": 1,
+            "max": 1,
+            "nota": "+3 puntos extra por comprobar que se rellenan los formularios."
+          },
+          {
+            "id": "k_difusion",
+            "cat": "K",
+            "texto": "Difusión de prácticas sobrantes, información, plantillas y guía",
+            "min": 3,
+            "max": 3,
+            "nota": "+1 punto extra por seguimiento."
+          },
+          {
+            "id": "k_rev_cv",
+            "cat": "K",
+            "texto": "Revisión: CV y Cover Letter",
+            "min": 10,
+            "max": 10,
+            "unidad": "documento"
+          },
+          {
+            "id": "k_rev_student",
+            "cat": "K",
+            "texto": "Revisión: Student Nominated, Academic Record y certificado de matrícula",
+            "min": 5,
+            "max": 5,
+            "unidad": "documento"
+          },
+          {
+            "id": "k_rev_oferta",
+            "cat": "K",
+            "texto": "Revisión: solicitud de una oferta extranjera",
+            "min": 3,
+            "max": 3,
+            "unidad": "documento"
+          },
+          {
+            "id": "k_rev_concordancia",
+            "cat": "K",
+            "texto": "Revisión: concordancia entre los documentos",
+            "min": 3,
+            "max": 3,
+            "unidad": "nominación"
+          },
+          {
+            "id": "k_rev_calidad",
+            "cat": "K",
+            "texto": "Revisión: presentación y calidad de los documentos",
+            "min": 2,
+            "max": 2,
+            "unidad": "nominación"
+          },
+          {
+            "id": "k_taller_impartir",
+            "cat": "K",
+            "texto": "Taller de Outgoing: impartirlo",
+            "min": 5,
+            "max": 10
+          },
+          {
+            "id": "k_taller_material",
+            "cat": "K",
+            "texto": "Taller de Outgoing: material y/o coffee break",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "k_taller_organizacion",
+            "cat": "K",
+            "texto": "Taller de Outgoing: organización",
+            "min": 3,
+            "max": 5
+          },
+          {
+            "id": "k_taller_presentacion",
+            "cat": "K",
+            "texto": "Taller de Outgoing: preparación de la presentación",
+            "min": 2,
+            "max": 5
+          },
+          {
+            "id": "k_taller_asistencia",
+            "cat": "K",
+            "texto": "Taller de Outgoing: asistencia",
+            "min": 1,
+            "max": 1
+          },
+          {
+            "id": "k_reg_nominaciones",
+            "cat": "K",
+            "texto": "Actualización del registro de nominaciones",
+            "min": 1,
+            "max": 1
+          },
+          {
+            "id": "k_reg_prohibidos",
+            "cat": "K",
+            "texto": "Actualización del registro de personas que tienen prohibido nominar",
+            "min": 1,
+            "max": 1
+          },
+          {
+            "id": "k_guia",
+            "cat": "K",
+            "texto": "Mejorar o actualizar la guía de Outgoing",
+            "min": 2,
+            "max": 5
+          },
+          {
+            "id": "k_idioma",
+            "cat": "K",
+            "texto": "Evaluación y certificación de nivel de idioma",
+            "min": 10,
+            "max": 10,
+            "nota": "El socio debe tener nivel C1 o C2 en ese idioma."
+          },
+          {
+            "id": "m_presencia",
+            "cat": "M",
+            "texto": "Presencia en evento (Subasta, CP…)",
+            "min": 10,
+            "max": 10
+          }
+        ]
+      }
+    }
+  },
+  "subcentros": [
+    "IDML",
+    "IFML",
+    "QMML",
+    "AQML",
+    "TLML"
+  ]
+}
