@@ -106,7 +106,7 @@ npm run correo           # http://localhost:8788 — en local envía a Mailpit
 
 Cada centro tiene su propio Supabase (sus datos) y su propio proyecto de Vercel (su web), cada uno desde su copia del template.
 
-1. **Desplegar**: con el botón de arriba ([«Despliegue en un clic»](#despliegue-en-un-clic), unos 5 minutos y sin terminal) o a mano ([«Desplegar desde cero»](#desplegar-desde-cero-supabase--vercel), con `npm run setup`).
+1. **Desplegar**: con el botón de arriba ([«Despliegue en un clic»](#despliegue-en-un-clic), unos 5 minutos y sin terminal) o a mano ([«Desplegar desde cero»](#desplegar-desde-cero-supabase--vercel), con `npm run setup`). **Importante:** desactiva la protección de despliegues de Vercel (ver el aviso en cualquiera de las dos guías) o los usuarios no podrán abrir la web.
 2. **Primer admin**: regístrate en la web nueva con el email que diste (`ADMIN_EMAIL` o `npm run setup`); solo ese email entra como admin, aunque otra persona se registre antes.
 3. **Ajustes**: entra en la pestaña **Ajustes** y rellena nombre, logo y color; apaga lo que el centro no quiera (por defecto la **puntuación está apagada**); añade sus subcentros si los tiene.
    - Si el centro quiere puntuación, enciéndela en Funciones y edita la rúbrica en Ajustes → Puntuación: parte de la de ejemplo, **Empezar de cero**, o **Copia de seguridad → Cargar desde archivo** con la de otro centro.
@@ -123,6 +123,9 @@ Ningún paso requiere tocar código. Lo único que sigue en código son los **es
    - **Supabase:** la integración oficial crea un proyecto nuevo (elige la región más cercana) y pone sus claves en Vercel. Se factura a través de Vercel; el plan gratuito basta para empezar.
    - **`ADMIN_EMAIL`:** tu email. Será el único que entre como admin.
 2. Vercel despliega. En cada despliegue de **producción**, `scripts/vercel-build.mjs` aplica las migraciones pendientes a tu Supabase y guarda el admin inicial antes de compilar la web. Si una migración falla, el despliegue falla y sigue publicada la versión anterior. Los despliegues de *preview* no tocan la base de datos.
+
+   > [!WARNING]
+   > **Desactiva la protección de despliegues de Vercel o nadie podrá entrar.** Vercel puede dejar el proyecto detrás de su login, y entonces el enlace del correo de confirmación (y la propia web) muestra «You Need Access» a quien no sea del equipo de Vercel. Ve a *Project → Settings → Deployment Protection* y en **Vercel Authentication** déjalo en *Only Preview Deployments* (o desactívalo). Se aplica al momento, sin redesplegar. Esto no se puede automatizar desde el repo ni desde el botón de despliegue, y hay que hacerlo en cada proyecto nuevo.
 3. **Ajustes de Supabase Auth** (Site URL, hook de correos desechables, contraseñas y SMTP). Elige una:
    - **Automático:** crea un token en [supabase.com/dashboard/account/tokens](https://supabase.com/dashboard/account/tokens), añádelo en Vercel como `SUPABASE_ACCESS_TOKEN` y vuelve a desplegar (*Deployments → Redeploy*). El build configura todo lo que siga con los valores de fábrica, y si están `GMAIL_USER` y `GMAIL_APP_PASSWORD`, pone ese Gmail como SMTP. Después **borra el token**: da acceso a todos tus proyectos de Supabase y solo hacía falta una vez.
    - **A mano:** los pasos 3 y 4 de [«Desplegar desde cero»](#desplegar-desde-cero-supabase--vercel).
@@ -140,6 +143,9 @@ Sin integración, con tu cuenta de Supabase y la terminal.
 
 1. **Supabase:** crea un proyecto vacío en [supabase.com](https://supabase.com) y guarda la contraseña de la base de datos. En una terminal del repo ejecuta `npm run setup`: pide la referencia del proyecto y tu email (el del admin), inicia sesión, enlaza, aplica las migraciones (**no** carga el seed), guarda tu email como admin inicial y escribe **`.env.vercel`** con las variables para Vercel. Ese archivo lleva la `service_role` key: no se sube al repo (`.gitignore`) y conviene borrarlo después de usarlo.
 2. **Vercel:** importa tu copia del repo (*Add New → Project*; detecta Vite) y pega el contenido de `.env.vercel` en *Settings → Environment Variables* (acepta pegar el archivo entero). Son tres: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY` (**secreta**). Para el correo, añade `GMAIL_USER`, `GMAIL_APP_PASSWORD` y, opcional, `MAIL_FROM_NAME` (ver [`server/README.md`](server/README.md)); sin ellas el CRM funciona, pero no envía correos.
+   > [!WARNING]
+   > Después de crear el proyecto, desactiva la protección de despliegues: *Settings → Deployment Protection → Vercel Authentication* en *Only Preview Deployments* (o desactivada). Si no, los usuarios ven «You Need Access» de Vercel en vez del CRM, también al abrir el enlace del correo de confirmación.
+
    La API de correo corre en el mismo proyecto como función serverless (`api/index.js`), así que no hace falta otro hosting. No definas `VITE_EMAIL_API_URL`: sin ella el navegador usa `/api/...` del mismo dominio. Los correos entrantes **no se leen en segundo plano**: se buscan en Gmail cuando alguien abre los correos de una empresa o pulsa el botón de actualizar.
 3. **Supabase → Authentication:**
    - **URL Configuration:** la URL de Vercel como *Site URL* y en *Redirect URLs* (para confirmar cuentas y recuperar contraseñas).
