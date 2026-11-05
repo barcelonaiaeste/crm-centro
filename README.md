@@ -150,7 +150,7 @@ Sin integración, con tu cuenta de Supabase y la terminal.
 
 Si se te olvidó dar el email o quieres cambiarlo: en el *SQL Editor* de Supabase, `update public.instalacion set admin_email = 'tu@correo.com';` (con `null`, vuelve la regla de «el primero que se registra es admin»).
 
-Para traer las novedades del template a tu copia, mira [`UPDATING.md`](UPDATING.md).
+Para traer las novedades del template a tu copia (hay un workflow que abre un PR solo), mira [`UPDATING.md`](UPDATING.md).
 
 La anon key es pública por diseño; la seguridad la imponen las políticas RLS. Nunca pongas la `service_role`/secret key en el frontend ni en el repo.
 
