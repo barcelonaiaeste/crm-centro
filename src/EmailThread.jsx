@@ -52,6 +52,8 @@ export default function EmailThread({ empresa, yo, onEnviado }) {
   const [correos, setCorreos] = useState(null)   // null = cargando
   const [err, setErr] = useState('')
   const [para, setPara] = useState('')
+  const [cc, setCc] = useState('')               // direcciones en copia, separadas por comas (opcional)
+  const [conCc, setConCc] = useState(false)      // la fila «CC» solo se muestra al pedirla
   const [asunto, setAsunto] = useState('')
   const [cuerpo, setCuerpo] = useState('')
   const [enviando, setEnviando] = useState(false)
@@ -68,7 +70,7 @@ export default function EmailThread({ empresa, yo, onEnviado }) {
   const cargar = useCallback(async () => {
     const { data, error } = await supabase
       .from('emails')
-      .select('id, direccion, remitente, destinatario, asunto, cuerpo_texto, enviado_en, enviado_por, contacto_id, adjuntos')
+      .select('id, direccion, remitente, destinatario, cc, asunto, cuerpo_texto, enviado_en, enviado_por, contacto_id, adjuntos')
       .eq('empresa_id', empresa.id)
       .order('enviado_en', { ascending: true })
       .limit(300)
@@ -173,17 +175,20 @@ export default function EmailThread({ empresa, yo, onEnviado }) {
     setErr(''); setAviso('')
     if (!para) { setErr('No hay ningún email al que escribir. Añádelo en la ficha de la empresa.'); return }
     if (!asunto.trim() || htmlVacio(cuerpo)) { setErr('Escribe el asunto y el mensaje.'); return }
+    const copia = cc.split(/[\s,;]+/).filter(Boolean)
+    const mala = copia.find((x) => !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x))
+    if (mala) { setErr(`La dirección en copia «${mala}» no es un email válido.`); return }
     setEnviando(true)
     try {
       const { data: { session } } = await supabase.auth.getSession()
       const r = await fetch(`${API}/api/emails/send`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session?.access_token}` },
-        body: JSON.stringify({ empresa_id: empresa.id, para, asunto: asunto.trim(), html: cuerpo, responder_a: ultimo?.id, adjuntos: adjuntos.map(({ path, nombre }) => ({ path, nombre })) }),
+        body: JSON.stringify({ empresa_id: empresa.id, para, cc: copia, asunto: asunto.trim(), html: cuerpo, responder_a: ultimo?.id, adjuntos: adjuntos.map(({ path, nombre }) => ({ path, nombre })) }),
       })
       const j = await r.json().catch(() => ({}))
       if (!r.ok) throw new Error(j.error || `Error ${r.status}`)
-      setCuerpo(''); setTocado(false); setAdjuntos([]); subidosRef.current = []
+      setCuerpo(''); setCc(''); setConCc(false); setTocado(false); setAdjuntos([]); subidosRef.current = []
       setAviso(j.estado ? 'Enviado ✓ · empresa marcada como «Mail enviado»' : 'Enviado ✓')
       if (j.estado) onEnviado?.(j.estado)
       await cargar()
@@ -221,6 +226,7 @@ export default function EmailThread({ empresa, yo, onEnviado }) {
                     <span className="truncate">{salida ? `Enviado a ${c.destinatario}` : c.remitente}</span>
                     <span className="text-slate-400 shrink-0">· {cuando(c.enviado_en)}</span>
                   </div>
+                  {c.cc && <p className="-mt-0.5 mb-1 text-[11px] text-slate-500 break-all">CC: {c.cc}</p>}
                   <p className="font-semibold text-slate-800 mb-0.5 break-words">{c.asunto}</p>
                   <p className="text-slate-700 whitespace-pre-wrap break-words">{c.cuerpo_texto || '(sin texto)'}</p>
                   {c.adjuntos?.length > 0 && (
@@ -262,7 +268,21 @@ export default function EmailThread({ empresa, yo, onEnviado }) {
           ) : (
             <p className="flex-1 min-w-0 py-1.5 text-sm text-slate-600 truncate">{para || 'Sin email en la ficha'}</p>
           )}
+          {!conCc && (
+            <button type="button" onClick={() => setConCc(true)} title="Poner a otro email en copia"
+              className="shrink-0 px-2 py-1 rounded-lg text-xs font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-700">CC</button>
+          )}
         </div>
+        {conCc && (
+          <div className="flex items-center gap-3 px-4 py-2 border-b border-slate-100">
+            <span className="w-14 shrink-0 text-xs font-semibold text-slate-400 uppercase tracking-wide">CC</span>
+            <input value={cc} onChange={(e) => setCc(e.target.value)} autoFocus type="text" inputMode="email" maxLength={1300}
+              placeholder="Email en copia (varios, separados por comas)"
+              className="flex-1 min-w-0 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 bg-transparent focus:outline-none" />
+            <button type="button" onClick={() => { setCc(''); setConCc(false) }} title="Quitar la copia" aria-label="Quitar la copia"
+              className="shrink-0 p-1 rounded text-slate-400 hover:bg-slate-100 hover:text-slate-600"><X className="w-3.5 h-3.5" /></button>
+          </div>
+        )}
         <div className="flex items-center gap-3 px-4 py-2 border-b border-slate-100">
           <span className="w-14 shrink-0 text-xs font-semibold text-slate-400 uppercase tracking-wide">Asunto</span>
           <input value={asunto} onChange={(e) => { setAsunto(e.target.value); setTocado(true) }} maxLength={200} placeholder="Asunto del correo"

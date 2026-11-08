@@ -130,6 +130,7 @@ export default function Guia({ isAdmin }) {
         <Lista>
           <li><B>Enviar:</B> elige el destinatario, escribe asunto y mensaje y pulsa «Enviar» (o <kbd className="px-1.5 py-0.5 rounded bg-slate-100 text-xs">Ctrl</kbd>+<kbd className="px-1.5 py-0.5 rounded bg-slate-100 text-xs">Enter</kbd>).</li>
           <li><B>Solo a direcciones de la empresa:</B> el destinatario tiene que estar en el campo Email de la ficha o haber escrito antes. Si falta, añádelo en la ficha y guarda.</li>
+          <li><B>Copia (CC):</B> pulsa <B>CC</B> a la derecha del destinatario para poner en copia a otra persona (por ejemplo, un compañero). Aquí sí vale cualquier email; puedes poner hasta 5 separados por comas.</li>
           <li><B>Estado automático:</B> el primer correo que envías a una empresa «Sin contactar» o «No lo cogen» la pasa a <B>Mail enviado</B>.</li>
           <li><B>Respuestas:</B> los correos nuevos se buscan al abrir la ficha y con el botón de actualizar (flechas circulares) de la sección Correos. No llegan en segundo plano, así que pulsa actualizar si esperas una respuesta.</li>
           <li><B>Responder:</B> por defecto escribes al último remitente con «Re: asunto», y el mensaje se enlaza con el hilo.</li>

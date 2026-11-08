@@ -66,6 +66,7 @@ export async function ingestarEntrante(sb, p, { cuentaPropia }) {
         referencias: p.referencias,
         remitente: p.remitente,
         destinatario: p.destinatario,
+        cc: p.cc ?? null,
         asunto: p.asunto,
         cuerpo_texto: p.texto,
         cuerpo_html: p.html,

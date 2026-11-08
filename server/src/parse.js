@@ -16,6 +16,7 @@ export async function parsearCorreo(source) {
   if (!remitente) throw new Error('Correo sin remitente válido')
 
   const para = (m.to?.value || []).map((a) => a.address).filter(Boolean)
+  const cc = (m.cc?.value || []).map((a) => a.address).filter(Boolean)
   const texto = (m.text || '').trim()
   const html = typeof m.html === 'string' ? m.html : null
 
@@ -29,6 +30,7 @@ export async function parsearCorreo(source) {
     remitente,
     nombreRemitente: de?.name?.trim() || null,
     destinatario: para.join(', '),
+    cc: cc.join(', ') || null,
     asunto: (m.subject || '(sin asunto)').slice(0, 500),
     texto: texto.slice(0, MAX_TEXTO),
     html: html ? html.slice(0, MAX_TEXTO * 2) : null,

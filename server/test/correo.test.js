@@ -165,6 +165,15 @@ test('API: un miembro envía desde su empresa, se guarda y llega a Mailpit con c
   assert.equal(msg.To[0].Address, 'jmolina@redesdelsur.example')
   assert.equal(msg.From.Address, PROPIA)
 
+  // Copia: cualquier email (no tiene que ser de la empresa); se guarda y llega con la cabecera Cc
+  const asuntoCc = `Con copia ${Date.now()}`
+  const rc = await post('/api/emails/send', token, { empresa_id: empresaMarta, para: 'jmolina@redesdelsur.example', cc: 'Tutor@Uni.example, jmolina@redesdelsur.example', asunto: asuntoCc, cuerpo: 'hola' })
+  assert.equal(rc.status, 201, await rc.clone().text())
+  assert.equal((await sb.from('emails').select('cc').eq('id', (await rc.json()).id).single()).data.cc, 'tutor@uni.example')
+  const listaCc = await (await fetch(`${MAILPIT}/api/v1/search?query=${encodeURIComponent('subject:"' + asuntoCc + '"')}`)).json()
+  const msgCc = await (await fetch(`${MAILPIT}/api/v1/message/${listaCc.messages[0].ID}`)).json()
+  assert.deepEqual(msgCc.Cc.map((x) => x.Address), ['tutor@uni.example'])
+
   // Responder: enlaza In-Reply-To
   const r2 = await post('/api/emails/send', token, { empresa_id: empresaMarta, para: 'jmolina@redesdelsur.example', asunto: 'Re: ' + asunto, cuerpo: 'Segundo', responder_a: id })
   assert.equal(r2.status, 201)
@@ -235,7 +244,7 @@ test('API: un miembro no puede enviar desde empresas ajenas ni a destinatarios q
 test('API: validación de entrada (asunto con saltos de línea, vacíos, email inválido)', async () => {
   const { token } = await login('ana@demo.test', 'Admin1234')
   const ok = { empresa_id: empresaMarta, para: 'jmolina@redesdelsur.example', asunto: 'a', cuerpo: 'b' }
-  for (const malo of [{ asunto: 'a\r\nBcc: x@y.z' }, { asunto: '' }, { cuerpo: '  ' }, { para: 'no-es-email' }, { cuerpo: 'x'.repeat(20_001) }]) {
+  for (const malo of [{ asunto: 'a\r\nBcc: x@y.z' }, { asunto: '' }, { cuerpo: '  ' }, { para: 'no-es-email' }, { cuerpo: 'x'.repeat(20_001) }, { cc: 'no-es-email' }, { cc: 'a@b.es\r\nBcc: x@y.z' }, { cc: [1, 2, 3, 4, 5, 6].map((n) => `c${n}@x.example`) }]) {
     assert.equal((await post('/api/emails/send', token, { ...ok, ...malo })).status, 400, JSON.stringify(malo).slice(0, 60))
   }
   assert.equal((await post('/api/emails/send', token, { ...ok, empresa_id: '00000000-0000-4000-8000-000000000000' })).status, 404)
