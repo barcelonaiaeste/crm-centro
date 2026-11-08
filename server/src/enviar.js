@@ -70,10 +70,23 @@ async function guardarAdjuntos(sb, empresaId, archivos) {
   }))
 }
 
+// Copia (CC): direcciones separadas por comas, punto y coma o espacios (o una lista). A diferencia del destinatario,
+// pueden ser de fuera de la empresa (un compañero, el tutor…), pero el «Para» siempre es de la empresa y hay un máximo.
+export const MAX_CC = 5
+const EMAIL = /^[^@\s,;<>]+@[^@\s,;<>]+\.[^@\s,;<>]+$/
+export function validarCc(cc, to) {
+  if (cc == null || cc === '') return []
+  const lista = (Array.isArray(cc) ? cc : String(cc).split(/[\s,;]+/)).map((x) => String(x).trim().toLowerCase()).filter(Boolean)
+  for (const x of lista) if (!EMAIL.test(x) || x.length > 254) throw new ErrorUsuario(`La dirección en copia «${x.slice(0, 80)}» no es un email válido.`)
+  const unicas = [...new Set(lista)].filter((x) => x !== to)
+  if (unicas.length > MAX_CC) throw new ErrorUsuario(`Máximo ${MAX_CC} direcciones en copia.`)
+  return unicas
+}
+
 // El mensaje llega como HTML del editor (`html`, se sanea aquí) o como texto plano (`cuerpo`)
 export function validarEnvio({ para, asunto, cuerpo, html }) {
   const to = String(para || '').trim().toLowerCase()
-  if (!/^[^@\s,;<>]+@[^@\s,;<>]+\.[^@\s,;<>]+$/.test(to) || to.length > 254) throw new ErrorUsuario('El destinatario no es un email válido.')
+  if (!EMAIL.test(to) || to.length > 254) throw new ErrorUsuario('El destinatario no es un email válido.')
   const subject = String(asunto || '').trim()
   if (!subject) throw new ErrorUsuario('Escribe un asunto.')
   if (subject.length > 200 || /[\r\n]/.test(subject)) throw new ErrorUsuario('El asunto es demasiado largo o contiene saltos de línea.')
@@ -115,8 +128,9 @@ async function remitente(sb) {
   return data?.datos?.correo?.remitente || data?.datos?.nombre || 'CRM'
 }
 
-export async function enviarCorreo(sb, usuario, { empresaId, para, asunto, cuerpo, html: cuerpoHtml, responderA, adjuntos }) {
+export async function enviarCorreo(sb, usuario, { empresaId, para, cc: copia, asunto, cuerpo, html: cuerpoHtml, responderA, adjuntos }) {
   const { to, subject, text, html } = validarEnvio({ para, asunto, cuerpo, html: cuerpoHtml })
+  const cc = validarCc(copia, to)
 
   const { data: empresa, error: eEmp } = await sb.from('empresas').select('id, nombre, email, responsable, estado').eq('id', empresaId).maybeSingle()
   if (eEmp) throw eEmp
@@ -151,6 +165,7 @@ export async function enviarCorreo(sb, usuario, { empresaId, para, asunto, cuerp
     await smtp().sendMail({
       from: { name: nombreRemitente, address: config.gmailUser },
       to,
+      cc: cc.length ? cc : undefined,
       subject,
       text,
       html,
@@ -184,6 +199,7 @@ export async function enviarCorreo(sb, usuario, { empresaId, para, asunto, cuerp
       referencias: referencias || null,
       remitente: config.gmailUser,
       destinatario: to,
+      cc: cc.join(', ') || null,
       asunto: subject,
       cuerpo_texto: text,
       cuerpo_html: html,
